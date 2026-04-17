@@ -81,6 +81,13 @@ const logoutUser = async (req, res) => {
   res.status(200).json({ message: "User logged out successfully" });
 };
 
+/**
+ * @getMe
+ * @route GET /api/auth/me
+ * @desc Get the currently logged-in user's information
+ * @access Private
+ */
+
 const getMe = async (req, res) => {
   const user = await userModel.findById(req.userId).select("-password");
   if (!user) {
