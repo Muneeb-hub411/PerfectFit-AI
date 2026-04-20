@@ -1,11 +1,2 @@
 @import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  font-family: "Inter", sans-serif;
-  background-color: rgb(33, 28, 28);
-}
