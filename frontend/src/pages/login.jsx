@@ -14,7 +14,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0f] relative overflow-hidden">
+    <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0f] overflow-y-auto py-6">
       {/* ── Animated background orbs ── */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-violet-700/25 rounded-full blur-[120px] animate-pulse" />
@@ -33,7 +33,7 @@ const Login = () => {
       />
 
       {/* ── Card ── */}
-      <div className="relative z-10 w-full max-w-[460px] h-[400px]  mx-4">
+      <div className="relative z-10 w-full max-w-[460px] mx-4">
         {/* Glow ring behind card */}
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-violet-600/30 to-indigo-600/20 blur-2xl scale-105 -z-10" />
 
