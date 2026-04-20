@@ -1,9 +1,10 @@
 import React from "react";
+import Login from "./pages/login.jsx"
 
 const App = () => {
   return (
     <>
-      <h1 className="text-amber-300">Hello, World!</h1>
+    <Login />
     </>
   );
 };
