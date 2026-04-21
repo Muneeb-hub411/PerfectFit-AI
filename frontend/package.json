@@ -16,6 +16,7 @@
     "react-dom": "^19.2.4",
     "react-router": "^7.14.1",
     "react-router-dom": "^7.14.1",
+    "react-toastify": "^11.1.0",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
