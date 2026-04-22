@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import { useAuth } from "./../hooks/useAuth";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { loading, hanleLogin } = useAuth();
   const [form, setForm] = useState({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -8,10 +12,18 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Logging in as: ${form.username}`);
+    await hanleLogin(form);
+    navigate("/");
   };
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0f]">
+        <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0f] overflow-y-auto py-6">
