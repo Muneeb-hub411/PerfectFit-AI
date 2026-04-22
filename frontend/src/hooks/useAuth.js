@@ -13,8 +13,10 @@ export const useAuth = () => {
       const data = await login({ email, password });
       setUser(data.user);
       toast.success("Login successful");
+      return true;
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
+      return false;
     } finally {
       setLoading(false);
     }
