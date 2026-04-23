@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 const SignUp = () => {
+  const { loading, handleRegister } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -10,8 +13,18 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Account created for: ${form.email}`);
+    const result = handleRegister(form);
+    if (result) {
+      return <Navigate to="/login" />;
+    }
   };
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0f]">
+        <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0f]">
