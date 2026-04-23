@@ -28,8 +28,10 @@ export const useAuth = () => {
       const data = await register({ username, email, password });
       setUser(data.user);
       toast.success("Registration successful");
+      return;
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");
+      return false;
     } finally {
       setLoading(false);
     }
