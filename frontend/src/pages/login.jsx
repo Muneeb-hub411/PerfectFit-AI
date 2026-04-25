@@ -1,17 +1,27 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import { useAuth } from "./../hooks/useAuth";
+import Spinner from "../components/Spinner";
 
 const Login = () => {
-  const [form, setForm] = useState({ username: "", password: "" });
+  const navigate = useNavigate();
+  const { loading, handleLogin } = useAuth();
+  const [form, setForm] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Logging in as: ${form.username}`);
+    console.log(form);
+    const success = await handleLogin(form);
+    if (success) navigate("/");
   };
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0f] overflow-y-auto py-6">
@@ -68,7 +78,7 @@ const Login = () => {
             {/* Username */}
             <div className="group">
               <label className="block text-[11px] font-semibold tracking-[0.12em] uppercase text-white/40 mb-2 group-focus-within:text-violet-400 transition-colors">
-                Username
+                Email
               </label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/25 group-focus-within:text-violet-400 transition-colors">
@@ -87,12 +97,12 @@ const Login = () => {
                   </svg>
                 </div>
                 <input
-                  type="text"
-                  name="username"
-                  placeholder="Enter your username"
-                  value={form.username}
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={form.email}
                   onChange={handleChange}
-                  autoComplete="username"
+                  autoComplete="email"
                   required
                   className="w-full bg-white/[0.06] border border-white/[0.1] hover:border-white/20 focus:border-violet-500 focus:bg-violet-500/[0.07] focus:ring-4 focus:ring-violet-500/[0.15] rounded-xl pl-11 pr-4 py-3.5 text-white text-[15px] placeholder-white/20 outline-none transition-all duration-200"
                 />
