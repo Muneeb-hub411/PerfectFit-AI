@@ -22,13 +22,13 @@ export const useAuth = () => {
     }
   };
 
-  const handleRegister = async ({ username, email, password }) => {
+  const handleRegister = async ({ name, email, password }) => {
     setLoading(true);
     try {
-      const data = await register({ username, email, password });
+      const data = await register({ name, email, password });
       setUser(data.user);
       toast.success("Registration successful");
-      return;
+      return true;
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");
       return false;

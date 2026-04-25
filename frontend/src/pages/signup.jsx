@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import Spinner from "../components/Spinner";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const { loading, handleRegister } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -11,19 +13,15 @@ const SignUp = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = handleRegister(form);
+    const result = await handleRegister(form);
     if (result) {
-      return <Navigate to="/login" />;
+      navigate("/");
     }
   };
   if (loading) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0f]">
-        <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (
