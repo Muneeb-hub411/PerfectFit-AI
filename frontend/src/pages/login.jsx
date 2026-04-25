@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "./../hooks/useAuth";
+import Spinner from "../components/Spinner";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,11 +20,7 @@ const Login = () => {
     if (success) navigate("/");
   };
   if (loading) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-[#0a0a0f]">
-        <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (
