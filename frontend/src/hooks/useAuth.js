@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
-import { login, register, logout } from "../api/api.auth";
+import { login, register, logout, getMe } from "../api/api.auth";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -49,6 +49,20 @@ export const useAuth = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    const getAndSetUser = async () => {
+      try {
+        const data = await getMe();
+        console.log("getMe response:", data); // ← yeh add karo
+        setUser(data.user);
+      } catch (err) {
+        console.log("getMe error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getAndSetUser();
+  }, []);
 
   return { handleLogin, handleRegister, handleLogout, user, loading };
 };
