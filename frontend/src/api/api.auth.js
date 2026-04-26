@@ -41,7 +41,7 @@ export const logout = async () => {
 
 export const getMe = async () => {
   try {
-    const response = await api.get("/api/auth/me");
+    const response = await api.get("/api/auth/getme");
     return response.data;
   } catch (error) {
     toast.error(error.response?.data?.message || "Failed to fetch user data");
