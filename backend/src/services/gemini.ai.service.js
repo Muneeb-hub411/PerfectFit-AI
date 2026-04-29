@@ -1,49 +1,85 @@
-const GoogleGenAI = require("@google/genai").GoogleGenAI;
-const z = require("zod");
+const { GoogleGenAI } = require("@google/genai");
+const { z } = require("zod");
 const { zodToJsonSchema } = require("zod-to-json-schema");
 
-const technicalQuestionSchema = z.object({
-  question: z.string().describe("Technical interview question"),
-  answer: z.string().describe("Suggested answer for the question"),
-  intention: z.string().describe("What the interviewer wants to assess"),
-});
-
-const behavioralQuestionSchema = z.object({
-  question: z.string().describe("Behavioral interview question"),
-  answer: z.string().describe("Suggested answer for the question"),
-  intention: z.string().describe("What the interviewer wants to assess"),
-});
-
-const skillsGapSchema = z.object({
-  skill: z.string().describe("Missing or weak skill"),
-  severinity: z
-    .enum(["low", "medium", "high"])
-    .describe("Severity of the skill gap"),
-});
-
-const preparationPlanSchema = z.object({
-  Day: z.number().describe("Day number of the preparation plan"),
-  tasks: z.array(z.string()).describe("List of tasks for the day"),
-  focus: z.string().describe("Main focus area for the day"),
-});
-
 const interviewReportSchema = z.object({
-  technical_question: z.array(technicalQuestionSchema),
-  behavioral_question: z.array(behavioralQuestionSchema),
-  skills_gap: z.array(skillsGapSchema),
-  preperation_plan: z.array(preparationPlanSchema),
   match_score: z
     .number()
-    .describe("Match score between resume and job description 0-100"),
-});
+    .describe(
+      "A score between 0 and 100 indicating how well the candidate's profile matches the job description",
+    ),
 
-// ================= AI CALL =================
+  technical_question: z
+    .array(
+      z.object({
+        question: z
+          .string()
+          .describe("The technical question asked in the interview"),
+        intention: z
+          .string()
+          .describe("The intention behind asking this question"),
+        answer: z
+          .string()
+          .describe(
+            "How to answer this question, what points to cover, and approach",
+          ),
+      }),
+    )
+    .describe(
+      "Technical questions along with their intention and suggested answers",
+    ),
+
+  behavioral_question: z
+    .array(
+      z.object({
+        question: z
+          .string()
+          .describe("The behavioral question asked in the interview"),
+        intention: z
+          .string()
+          .describe("The intention behind asking this question"),
+        answer: z
+          .string()
+          .describe(
+            "How to answer this question, what points to cover, and approach",
+          ),
+      }),
+    )
+    .describe(
+      "Behavioral questions along with their intention and suggested answers",
+    ),
+
+  skills_gap: z
+    .array(
+      z.object({
+        skill: z.string().describe("The skill which the candidate is lacking"),
+        severity: z
+          .enum(["low", "medium", "high"])
+          .describe("Severity of this skill gap"),
+      }),
+    )
+    .describe("List of skill gaps with severity"),
+
+  preperation_plan: z
+    .array(
+      z.object({
+        Day: z
+          .number()
+          .describe("Day number in the preparation plan (starting from 1)"),
+        focus: z.string().describe("Main focus area for the day"),
+        tasks: z.array(z.string()).describe("Tasks to complete on this day"),
+      }),
+    )
+    .describe("Day-wise preparation plan"),
+
+  title: z.string().describe("The job title for which the report is generated"),
+});
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
-export const generateInterviewReport = async ({
+const generateInterviewReport = async ({
   resume_text,
   self_description,
   job_title,
@@ -53,6 +89,9 @@ export const generateInterviewReport = async ({
     You are an expert interview coach and career advisor.
     
     Analyze the following resume and job description and generate a detailed interview report.
+    You must return ONLY valid JSON. No explanation.
+
+Use EXACTLY this structure:
 
     Resume:
     ${resume_text}
@@ -75,14 +114,17 @@ export const generateInterviewReport = async ({
   `;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
+    model: "gemini-3-flash-preview",
     contents: prompt,
     config: {
       responseMimeType: "application/json",
-      responseJsonSchema: zodToJsonSchema(interviewReportSchema),
+      responseSchema: zodToJsonSchema(interviewReportSchema),
     },
   });
-
-  const report = interviewReportSchema.parse(JSON.parse(response.text));
-  return report;
+  console.log("Raw AI Response:", response.text); // Debugging line to see the raw response
+  const JSonres = JSON.parse(response.text);
+  console.log("Parsed AI Response:", JSonres); // Debugging line to see the parsed response
+  return JSonres;
 };
+
+module.exports = { generateInterviewReport }; // ← export aisa karo
