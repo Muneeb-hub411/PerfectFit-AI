@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const technicalQuestionSchema = new monoose.Schema(
+const technicalQuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
@@ -10,7 +10,7 @@ const technicalQuestionSchema = new monoose.Schema(
   },
   { _id: false },
 );
-const behavioralQuestionSchema = new monoose.Schema(
+const behavioralQuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
@@ -21,7 +21,7 @@ const behavioralQuestionSchema = new monoose.Schema(
   { _id: false },
 );
 
-const skillsGapSchema = new monoose.Schema(
+const skillsGapSchema = new mongoose.Schema(
   {
     skill: {
       type: String,
@@ -31,7 +31,7 @@ const skillsGapSchema = new monoose.Schema(
   { _id: false },
 );
 
-const preperationPlanSchema = new monoose.Schema(
+const preperationPlanSchema = new mongoose.Schema(
   {
     Day: {
       type: Number,
@@ -50,10 +50,10 @@ const preperationPlanSchema = new monoose.Schema(
   },
   { _id: false },
 );
-const interviewReportSchema = new monoose.Schema(
+const interviewReportSchema = new mongoose.Schema(
   {
     user_id: {
-      type: monoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "user_Model",
       required: [true, "User id is required"],
     },
