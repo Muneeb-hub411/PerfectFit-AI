@@ -1,4 +1,4 @@
-const monoose = require("mongoose");
+const mongoose = require("mongoose");
 
 const technicalQuestionSchema = new monoose.Schema(
   {
@@ -84,3 +84,9 @@ const interviewReportSchema = new monoose.Schema(
   },
   { timestamps: true },
 );
+
+const interviewReportModel = mongoose.model(
+  "interview_report",
+  interviewReportSchema,
+);
+module.exports = interviewReportModel;
