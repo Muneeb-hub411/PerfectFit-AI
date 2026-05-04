@@ -1,6 +1,6 @@
 const interviewReportModel = require("../models/interviewReport.model");
 const { generateInterviewReport } = require("../services/gemini.ai.service");
-const PDFParser = require("pdf-parse");
+const pdfParse = require("pdf-parse");
 
 const generateReport = async (req, res) => {
   try {
@@ -14,7 +14,13 @@ const generateReport = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+<<<<<<< HEAD
+    const pdfData = await new pdfParse.PDFParse(
+      Uint8Array.from(req.file.buffer),
+    ).getText();
+=======
     const pdfData = await PDFParser(req.file.buffer);
+>>>>>>> 9d1aac6e8fd6730d4f5f00fbf7f08fe0be6afcbf
     const resume_text = pdfData.text;
 
     if (!resume_text) {
@@ -23,22 +29,25 @@ const generateReport = async (req, res) => {
         .json({ message: "Could not extract text from PDF" });
     }
 
-    // AI ko bhejo
     const report = await generateInterviewReport({
       resume_text,
       self_description,
       job_title,
       job_description,
     });
+    console.log("Generated Report:", report); // Debugging line to see the generated report
 
-    // DB mein save karo
     const interviewReport = await interviewReportModel.create({
       user_id: req.userId,
       resume_text,
       self_description,
       job_title,
       job_description,
-      ...report,
+      technical_question: report.technical_question,
+      behavioral_question: report.behavioral_question,
+      skills_gap: report.skills_gap,
+      preperation_plan: report.preperation_plan,
+      match_score: report.match_score,
     });
 
     res.status(201).json({
