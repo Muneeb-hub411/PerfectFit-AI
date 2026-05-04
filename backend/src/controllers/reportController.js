@@ -4,7 +4,6 @@ const pdfParse = require("pdf-parse");
 
 const generateReport = async (req, res) => {
   try {
-    // PDF check karo
     if (!req.file) {
       return res.status(400).json({ message: "Resume PDF is required" });
     }
@@ -15,9 +14,13 @@ const generateReport = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+<<<<<<< HEAD
     const pdfData = await new pdfParse.PDFParse(
       Uint8Array.from(req.file.buffer),
     ).getText();
+=======
+    const pdfData = await PDFParser(req.file.buffer);
+>>>>>>> 9d1aac6e8fd6730d4f5f00fbf7f08fe0be6afcbf
     const resume_text = pdfData.text;
 
     if (!resume_text) {
@@ -57,6 +60,17 @@ const generateReport = async (req, res) => {
   }
 };
 
+const getreportByUserId = async (req, res) => {
+  try {
+    const reports = await interviewReportModel.find({ user_id: req.userId });
+    res.status(200).json({ reports });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   generateReport,
+  getreportByUserId,
 };
