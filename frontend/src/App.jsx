@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/authContext.jsx";
 import { ToastContainer } from "react-toastify";
 import Protected from "./components/Protected.jsx";
+import Dashboard from "./pages/Dashboard";
 const App = () => {
   return (
     <AuthProvider>
@@ -16,7 +17,7 @@ const App = () => {
           path="/"
           element={
             <Protected>
-              <h1>Home</h1>
+              <Dashboard />
             </Protected>
           }
         />
