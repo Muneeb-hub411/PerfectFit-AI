@@ -14,13 +14,12 @@ const generateReport = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-<<<<<<< HEAD
     const pdfData = await new pdfParse.PDFParse(
       Uint8Array.from(req.file.buffer),
     ).getText();
-=======
+
     const pdfData = await PDFParser(req.file.buffer);
->>>>>>> 9d1aac6e8fd6730d4f5f00fbf7f08fe0be6afcbf
+
     const resume_text = pdfData.text;
 
     if (!resume_text) {
