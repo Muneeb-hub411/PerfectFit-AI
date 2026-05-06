@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import Protected from "./components/Protected.jsx";
 import Dashboard from "./pages/Dashboard";
 import { ReportProvider } from "./context/reportContext.jsx";
+import ReportDetail from "./pages/ReportDetail.jsx";
 const App = () => {
   return (
     <AuthProvider>
@@ -20,6 +21,14 @@ const App = () => {
             element={
               <Protected>
                 <Dashboard />
+              </Protected>
+            }
+          />
+          <Route
+            path="/report/:id"
+            element={
+              <Protected>
+                <ReportDetail />
               </Protected>
             }
           />
