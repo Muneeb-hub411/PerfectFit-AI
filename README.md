@@ -212,5 +212,5 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ---
 
 <div align="center">
-  <strong>Built with ✦ by yours truly 🦍</strong>
+  <strong>Built with ❤️ by yours truly 🦍</strong>
 </div>
