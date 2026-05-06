@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/header";
+import Header from "../components/Header";
 import ReportForm from "../components/reportForm";
 import { useReport } from "../hooks/useReport";
 import { useNavigate } from "react-router";

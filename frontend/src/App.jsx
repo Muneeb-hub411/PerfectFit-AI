@@ -8,6 +8,7 @@ import Protected from "./components/Protected.jsx";
 import Dashboard from "./pages/Dashboard";
 import { ReportProvider } from "./context/reportContext.jsx";
 import ReportDetail from "./pages/ReportDetail.jsx";
+import MyReports from "./pages/MyReports.jsx";
 const App = () => {
   return (
     <AuthProvider>
@@ -21,6 +22,14 @@ const App = () => {
             element={
               <Protected>
                 <Dashboard />
+              </Protected>
+            }
+          />
+          <Route
+            path="/my-reports"
+            element={
+              <Protected>
+                <MyReports />
               </Protected>
             }
           />

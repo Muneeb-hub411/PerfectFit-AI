@@ -54,6 +54,7 @@ export const useReport = () => {
     handleGetAllReports,
     reports,
     currentReport,
+    setCurrentReport,
     loading,
   };
 };
