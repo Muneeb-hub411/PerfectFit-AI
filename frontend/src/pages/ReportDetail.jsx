@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useReport } from "../hooks/useReport";
-import Header from "../components/header";
+import Header from "../components/Header";
 
 const severityConfig = {
   high: {
