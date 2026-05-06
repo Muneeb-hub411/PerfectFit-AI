@@ -18,8 +18,6 @@ const generateReport = async (req, res) => {
       Uint8Array.from(req.file.buffer),
     ).getText();
 
-    const pdfData = await PDFParser(req.file.buffer);
-
     const resume_text = pdfData.text;
 
     if (!resume_text) {
