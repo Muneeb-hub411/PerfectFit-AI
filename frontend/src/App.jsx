@@ -6,23 +6,44 @@ import { AuthProvider } from "./context/authContext.jsx";
 import { ToastContainer } from "react-toastify";
 import Protected from "./components/Protected.jsx";
 import Dashboard from "./pages/Dashboard";
+import { ReportProvider } from "./context/reportContext.jsx";
+import ReportDetail from "./pages/ReportDetail.jsx";
+import MyReports from "./pages/MyReports.jsx";
 const App = () => {
   return (
     <AuthProvider>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+      <ReportProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
-        <Route
-          path="/"
-          element={
-            <Protected>
-              <Dashboard />
-            </Protected>
-          }
-        />
-      </Routes>
-      <ToastContainer />
+          <Route
+            path="/"
+            element={
+              <Protected>
+                <Dashboard />
+              </Protected>
+            }
+          />
+          <Route
+            path="/my-reports"
+            element={
+              <Protected>
+                <MyReports />
+              </Protected>
+            }
+          />
+          <Route
+            path="/report/:id"
+            element={
+              <Protected>
+                <ReportDetail />
+              </Protected>
+            }
+          />
+        </Routes>
+        <ToastContainer />
+      </ReportProvider>
     </AuthProvider>
   );
 };
