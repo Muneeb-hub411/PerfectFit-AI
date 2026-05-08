@@ -181,7 +181,7 @@ Generate the actual report now for the candidate above. Same structure, differen
       console.log(`Attempt ${attempt}/${MAX_RETRIES}`);
 
       const response = await ai.models.generateContent({
-        model: "gemini-3.1-pro-preview",
+        model: "gemini-3-flash-preview",
         contents: prompt,
         config: {
           responseMimeType: "application/json", // keep this — still helps even if schema is ignored
